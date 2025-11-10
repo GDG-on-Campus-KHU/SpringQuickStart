@@ -21,7 +21,7 @@ public class DemoApplication {
         return args -> {
             // 글 등록 기능 테스트
             BoardVO vo = new BoardVO();
-            vo.setTitle("Sample Title");
+            vo.setTitle("ttesting");
             vo.setWriter("Author Name");
             vo.setContent("This is a sample content for the board.");
             boardService.insertBoard(vo);
@@ -33,7 +33,7 @@ public class DemoApplication {
                 System.out.println(board.toString());
             }
 
-            //로그인 기능 테스트
+            // 로그인 기능 테스트
             UserVO uservo = new UserVO();
             uservo.setId("test");
             uservo.setPassword("pass12");
