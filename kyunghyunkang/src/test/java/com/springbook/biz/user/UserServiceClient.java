@@ -1,4 +1,4 @@
-package user;
+package com.springbook.biz.user;
 
 import com.springbook.biz.user.UserService;
 import com.springbook.biz.user.UserVO;
