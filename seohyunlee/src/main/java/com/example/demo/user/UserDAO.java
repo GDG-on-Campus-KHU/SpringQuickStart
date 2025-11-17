@@ -15,7 +15,7 @@ public class UserDAO {
 
     private final String USER_GET = "select * from users where id=? and password=?";
 
-    //회원등록
+    // 회원등록
     public UserVO getUser(UserVO vo) {
         System.out.println("====> JDBC로 getUser() 기능 처리 <====");
         UserVO user = null;

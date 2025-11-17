@@ -1,125 +1,77 @@
 package com.example.demo.board;
 
-import com.example.demo.JDBCUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+import javax.sql.DataSource;
 import java.sql.ResultSet;
-import java.util.ArrayList;
+import java.sql.SQLException;
 import java.util.List;
 
 @Repository("boardDAO")
-public class BoardDAO {
-    private Connection conn = null;
-    private PreparedStatement stmt = null;
-    private ResultSet rs = null;
+public class BoardDAO extends JdbcDaoSupport {
 
-    private final String BOARD_INSERT = "insert into board(seq, title, writer, content) values((select nvl(max(seq),0)+1 from board), ?, ?, ?)";
-    private final String BOARD_UPDATE = "update board set title=?, content=? where seq=?";
-    private final String BOARD_DELETE = "delete from board where seq=?";
-    private final String BOARD_GET = "select * from board where seq=?";
-    private final String BOARD_LIST = "select * from board order by seq desc";
+    private final String BOARD_INSERT = "INSERT INTO board(seq, title, writer, content) VALUES((SELECT COALESCE(MAX(seq),0)+1 FROM board), ?, ?, ?)";
 
-    //글 등록
+    private final String BOARD_UPDATE = "UPDATE board SET title=?, content=? WHERE seq=?";
+
+    private final String BOARD_DELETE = "DELETE FROM board WHERE seq=?";
+
+    private final String BOARD_GET = "SELECT * FROM board WHERE seq=?";
+
+    private final String BOARD_LIST = "SELECT * FROM board ORDER BY seq DESC";
+
+    @Autowired
+    public void setSuperDataSource(DataSource dataSource) {
+        super.setDataSource(dataSource);
+    }
+
+    // 글 등록
+    @Transactional
     public void insertBoard(BoardVO vo) {
-        System.out.println("====> JDBC로 insertBoard() 기능 처리 <====");
-        try {
-            conn = JDBCUtil.getConnection();
-            stmt = conn.prepareStatement(BOARD_INSERT);
-            stmt.setString(1, vo.getTitle());
-            stmt.setString(2, vo.getWriter());
-            stmt.setString(3, vo.getContent());
-            stmt.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            JDBCUtil.close(stmt, conn);
-        }
+        System.out.println("====> JdbcTemplate으로 insertBoard() 기능 처리 <====");
+        getJdbcTemplate().update(BOARD_INSERT, vo.getTitle(), vo.getWriter(), vo.getContent());
     }
 
-    //글 수정
+    // 글 수정
     public void updateBoard(BoardVO vo) {
-        System.out.println("====> JDBC로 updateBoard() 기능 처리 <====");
-        try {
-            conn = JDBCUtil.getConnection();
-            stmt = conn.prepareStatement(BOARD_UPDATE);
-            stmt.setString(1, vo.getTitle());
-            stmt.setString(2, vo.getContent());
-            stmt.setInt(3, vo.getSeq());
-            stmt.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            JDBCUtil.close(stmt, conn);
-        }
+        System.out.println("====> JdbcTemplate으로 updateBoard() 기능 처리 <====");
+        getJdbcTemplate().update(BOARD_UPDATE, vo.getTitle(), vo.getContent(), vo.getSeq());
     }
 
-    //글 삭제
+    // 글 삭제
     public void deleteBoard(BoardVO vo) {
-        System.out.println("====> JDBC로 deleteBoard() 기능 처리 <====");
-        try {
-            conn = JDBCUtil.getConnection();
-            stmt = conn.prepareStatement(BOARD_DELETE);
-            stmt.setInt(1, vo.getSeq());
-            stmt.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            JDBCUtil.close(stmt, conn);
-            }
-        }
+        System.out.println("====> JdbcTemplate으로 deleteBoard() 기능 처리 <====");
+        getJdbcTemplate().update(BOARD_DELETE, vo.getSeq());
+    }
 
-    //글 상세 조회
+    // 글 상세 조회
     public BoardVO getBoard(BoardVO vo) {
-        System.out.println("====> JDBC로 getBoard() 기능 처리 <====");
-        BoardVO board = null;
-        try {
-            conn = JDBCUtil.getConnection();
-            stmt = conn.prepareStatement(BOARD_GET);
-            stmt.setInt(1, vo.getSeq());
-            rs = stmt.executeQuery();
-            if (rs.next()) {
-                board = new BoardVO();
-                board.setSeq(rs.getInt("SEQ"));
-                board.setTitle(rs.getString("TITLE"));
-                board.setWriter(rs.getString("WRITER"));
-                board.setContent(rs.getString("CONTENT"));
-                board.setRegDate(rs.getString("REGDATE"));
-                board.setCnt(rs.getInt("CNT"));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            JDBCUtil.close(rs, stmt, conn);
-        }
-        return board;
+        System.out.println("====> JdbcTemplate으로 getBoard() 기능 처리 <====");
+        return getJdbcTemplate().queryForObject(BOARD_GET, new Object[] { vo.getSeq() }, new BoardRowMapper());
     }
 
+    // 글 목록 조회
+    public List<BoardVO> getBoardList(BoardVO vo) {
+        System.out.println("====> JdbcTemplate으로 getBoardList() 기능 처리 <====");
+        return getJdbcTemplate().query(BOARD_LIST, new BoardRowMapper());
+    }
 
-        //글 목록 조회
-        public List<BoardVO> getBoardList(BoardVO vo) {
-            System.out.println("====> JDBC로 getBoardList() 기능 처리 <====");
-            List<BoardVO> boardList = new ArrayList<BoardVO>();
-            try {
-                conn = JDBCUtil.getConnection();
-                stmt = conn.prepareStatement(BOARD_LIST);
-                rs = stmt.executeQuery();
-                while (rs.next()) {
-                    BoardVO board = new BoardVO();
-                    board.setSeq(rs.getInt("SEQ"));
-                    board.setTitle(rs.getString("TITLE"));
-                    board.setWriter(rs.getString("WRITER"));
-                    board.setContent(rs.getString("CONTENT"));
-                    board.setRegDate(rs.getString("REGDATE"));
-                    board.setCnt(rs.getInt("CNT"));
-                    boardList.add(board);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                JDBCUtil.close(rs, stmt, conn);
-            }
-            return boardList;
+    // 내부 RowMapper 클래스 정의
+    private static class BoardRowMapper implements RowMapper<BoardVO> {
+        @Override
+        public BoardVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+            BoardVO board = new BoardVO();
+            board.setSeq(rs.getInt("SEQ"));
+            board.setTitle(rs.getString("TITLE"));
+            board.setWriter(rs.getString("WRITER"));
+            board.setContent(rs.getString("CONTENT"));
+            board.setRegDate(rs.getString("REGDATE"));
+            board.setCnt(rs.getInt("CNT"));
+            return board;
         }
     }
+}

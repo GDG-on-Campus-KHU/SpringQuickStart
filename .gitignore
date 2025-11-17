@@ -1,0 +1,81 @@
+# ==========================================
+# OS & System Files
+# ==========================================
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*~
+
+# ==========================================
+# Java (Generic)
+# ==========================================
+*.class
+*.log
+*.ctxt
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# ==========================================
+# Maven
+# ==========================================
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.properties
+
+# ==========================================
+# Gradle
+# ==========================================
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!gradle-wrapper.properties
+gradle-app.setting
+.gradletasknamecache
+out/
+
+# ==========================================
+# IntelliJ IDEA
+# ==========================================
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+# ==========================================
+# Eclipse
+# ==========================================
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
+.project
+.classpath
+
+# ==========================================
+# VS Code
+# ==========================================
+.vscode/
+*.code-workspace

@@ -21,6 +21,13 @@ public class BoardServiceClient {
         vo.setContent("임시 내용...........");
         boardService.insertBoard(vo);
 
+//        try {
+//            boardService.insertBoard(vo);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return;
+//        }
+
         // 4. 글 목록 검색 기능 테스트
         List<BoardVO> boardList = boardService.getBoardList(vo);
         for (BoardVO board: boardList) {
