@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시판 목록</title>
+    <style>
+        table { border-collapse: collapse; width: 700px; }
+        th, td { padding: 5px; border: 1px solid #000; }
+        th { background-color: orange; }
+    </style>
+</head>
+<body>
+<center>
+
+    <h1>글 목록</h1>
+    <h3>테스트님 환영합니다... <a th:href="@{/logout}">Log-out</a></h3>
+
+    <!-- 검색 시작 -->
+    <form th:action="@{/getBoardList}" method="post">
+        <table border="0" cellpadding="0" cellspacing="0" width="700">
+            <tr>
+                <td align="right">
+                    <select name="searchCondition">
+                        <option value="TITLE">제목</option>
+                        <option value="CONTENT">내용</option>
+                    </select>
+                    <input name="searchKeyword" type="text"/>
+                    <input type="submit" value="검색"/>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <!-- 검색 종료 -->
+
+    <table>
+        <tr>
+            <th width="100">번호</th>
+            <th width="200">제목</th>
+            <th width="150">작성자</th>
+            <th width="150">등록일</th>
+            <th width="100">조회수</th>
+        </tr>
+
+        <tr th:if="${#lists.isEmpty(boardList)}">
+            <td colspan="5" align="center">조회된 게시글이 없습니다.</td>
+        </tr>
+
+        <tr th:each="board : ${boardList}">
+            <td th:text="${board.seq}">1</td>
+            <td align="left">
+                <a th:href="@{/getBoard(seq=${board.seq})}" th:text="${board.title}">게시글 제목</a>
+            </td>
+            <td th:text="${board.writer}">작성자</td>
+            <td th:text="${board.regDate}">등록일</td>
+            <td th:text="${board.cnt}">조회수</td>
+        </tr>
+    </table>
+
+    <br>
+    <a th:href="@{/insertBoard}">새글 등록</a>
+
+</center>
+</body>
+</html>

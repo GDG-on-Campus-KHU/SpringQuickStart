@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>새글 등록</title>
+    <style>
+        table { border-collapse: collapse; }
+        td { padding: 5px; border: 1px solid #000; }
+        td.bg-orange { background-color: orange; width: 70px; }
+        textarea { width: 100%; }
+    </style>
+</head>
+<body>
+<center>
+
+    <h1>글 등록</h1>
+    <a th:href="@{/logout}">Log-out</a>
+    <hr>
+
+    <form th:action="@{/insertBoard}" method="post">
+        <table>
+            <tr>
+                <td class="bg-orange">제목</td>
+                <td align="left">
+                    <input type="text" name="title"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="bg-orange">작성자</td>
+                <td align="left">
+                    <input type="text" name="writer" size="10"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="bg-orange">내용</td>
+                <td align="left">
+                    <textarea name="content" rows="10" cols="40"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="submit" value="새글 등록"/>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <hr>
+    <a th:href="@{/getBoardList}">목록 가기</a>
+
+</center>
+</body>
+</html>
