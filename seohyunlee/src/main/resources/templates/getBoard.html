@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>글 상세</title>
+    <style>
+        table { border-collapse: collapse; }
+        td { padding: 5px; border: 1px solid #000; }
+        td.bg-orange { background-color: orange; width: 70px; }
+        textarea { width: 100%; }
+        form.inline { display: inline; }
+    </style>
+</head>
+<body>
+<center>
+
+    <h1>글 상세</h1>
+    <a th:href="@{/logout}">Log-out</a>
+    <hr>
+
+    <div th:if="${board != null}">
+        <!-- 글 수정 폼 -->
+        <form th:action="@{/updateBoard}" method="post">
+            <table>
+                <tr>
+                    <td class="bg-orange">제목</td>
+                    <td align="left">
+                        <input type="text" name="title" th:value="${board.title}" />
+                        <input type="hidden" name="seq" th:value="${board.seq}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg-orange">작성자</td>
+                    <td align="left" th:text="${board.writer}">작성자</td>
+                </tr>
+                <tr>
+                    <td class="bg-orange">내용</td>
+                    <td align="left">
+                        <textarea name="content" rows="10" th:text="${board.content}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg-orange">등록일</td>
+                    <td align="left" th:text="${board.regDate}">등록일</td>
+                </tr>
+                <tr>
+                    <td class="bg-orange">조회수</td>
+                    <td align="left" th:text="${board.cnt}">조회수</td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <input type="submit" value="글 수정"/>
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+        <hr>
+
+        <!-- 글 등록 버튼 -->
+        <a th:href="@{/insertBoard}">글 등록</a>&nbsp;&nbsp;&nbsp;
+
+        <!-- 글 삭제: POST 방식 -->
+        <form th:action="@{/deleteBoard}" method="post" class="inline">
+            <input type="hidden" name="seq" th:value="${board.seq}" />
+            <button type="submit">글 삭제</button>
+        </form>&nbsp;&nbsp;&nbsp;
+
+        <!-- 글 목록 버튼 -->
+        <a th:href="@{/getBoardList}">글 목록</a>
+    </div>
+
+    <div th:if="${board == null}">
+        <p>선택한 게시글이 존재하지 않습니다.</p>
+    </div>
+
+</center>
+</body>
+</html>
