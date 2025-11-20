@@ -70,7 +70,7 @@ public class BoardDAO implements com.springbook.biz.board.BoardService {
         System.out.println("===> JDBC로 deleteBoard() 기능 처리");
         try {
             conn = JDBCUtil.getConnection();
-            stmt = conn.prepareStatement(BOARD_UPDATE);
+            stmt = conn.prepareStatement(BOARD_DELETE);
             stmt.setInt(1, vo.getSeq());
             stmt.executeUpdate();
         } catch (Exception e) {
