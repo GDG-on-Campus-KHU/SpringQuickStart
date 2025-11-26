@@ -29,6 +29,14 @@ dependencies {
     implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1'
     implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
 
+    // Apache Commons FileUpload (파일 업로드 처리)
+    implementation 'commons-fileupload:commons-fileupload:1.5'
+    // Apache Commons IO (파일 관련 유틸리티 및 FileUpload 의존성)
+    implementation 'commons-io:commons-io:2.15.1'
+
+    // Spring Context 라이브러리 (MessageSource 등을 포함한 핵심 모듈)
+    implementation 'org.springframework:spring-context'
+
     runtimeOnly 'com.h2database:h2:2.4.240'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -46,4 +54,12 @@ sourceSets {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(ProcessResources).configureEach {
+    filteringCharset = 'UTF-8'
 }

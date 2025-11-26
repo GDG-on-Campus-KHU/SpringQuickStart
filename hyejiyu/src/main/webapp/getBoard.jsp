@@ -1,33 +1,33 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-    <title>±€ ªÛºº</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Í∏Ä ÏÉÅÏÑ∏</title>
 </head>
 <body>
 <center>
-    <h1>±€ ªÛºº</h1>
+    <h1>Í∏Ä ÏÉÅÏÑ∏</h1>
     <a href="logout.do">Log-out</a>
     <hr>
-    <!-- ±€ ºˆ¡§ ∆˚ Ω√¿€ -->
+    <!-- Í∏Ä ÏàòÏ†ï Ìèº ÏãúÏûë -->
     <form action="updateBoard.do" method="post">
         <input name="seq" type="hidden" value="${board.seq}">
         <table border="1" cellpadding="0" cellspacing="0">
             <tr>
-                <td bgcolor="orange" width="70">¡¶∏Ò</td>
+                <td bgcolor="orange" width="70">Ï†úÎ™©</td>
                 <td align="left">
                     <input name="title" type="text" value="${board.title}">
                 </td>
             </tr>
             <tr>
-                <td bgcolor="orange">¿€º∫¿⁄</td>
+                <td bgcolor="orange">ÏûëÏÑ±Ïûê</td>
                 <td align="left">${board.writer}</td>
             </tr>
             <tr>
-                <td bgcolor="orange">≥ªøÎ</td>
+                <td bgcolor="orange">ÎÇ¥Ïö©</td>
                 <td align="left">
     <textarea name="content" cols="40" rows="10">
         ${board.content}
@@ -35,26 +35,26 @@
                 </td>
             </tr>
             <tr>
-                <td bgcolor="orange">µÓ∑œ¿œ</td>
+                <td bgcolor="orange">Îì±Î°ùÏùº</td>
                 <td align="left">${board.regDate}</td>
             </tr>
             <tr>
-                <td bgcolor="orange">¡∂»∏ºˆ</td>
+                <td bgcolor="orange">Ï°∞ÌöåÏàò</td>
                 <td align="left">${board.cnt}</td>
             </tr>
             <tr>
                 <td colspan="2" align="center">
-                    <input type="submit" value="±€ ºˆ¡§">
+                    <input type="submit" value="Í∏Ä ÏàòÏ†ï">
                 </td>
             </tr>
         </table>
     </form>
     <hr>
 
-    <!-- «œ¥‹ ∏ﬁ¥∫ -->
-    <a href="insertBoard.jsp">±€µÓ∑œ</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <a href="deleteBoard.do?seq=${board.seq}">±€ªË¡¶</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <a href="getBoardList.do">±€∏Ò∑œ</a>
+    <!-- ÌïòÎã® Î©îÎâ¥ -->
+    <a href="insertBoard.jsp">Í∏ÄÎì±Î°ù</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="deleteBoard.do?seq=${board.seq}">Í∏ÄÏÇ≠Ï†ú</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="getBoardList.do">Í∏ÄÎ™©Î°ù</a>
 
 </center>
 </body>
