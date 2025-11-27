@@ -15,13 +15,9 @@ import java.util.List;
 public class BoardDAO extends JdbcDaoSupport {
 
     private final String BOARD_INSERT = "INSERT INTO board(seq, title, writer, content) VALUES((SELECT COALESCE(MAX(seq),0)+1 FROM board), ?, ?, ?)";
-
     private final String BOARD_UPDATE = "UPDATE board SET title=?, content=? WHERE seq=?";
-
     private final String BOARD_DELETE = "DELETE FROM board WHERE seq=?";
-
     private final String BOARD_GET = "SELECT * FROM board WHERE seq=?";
-
     private final String BOARD_LIST = "SELECT * FROM board ORDER BY seq DESC";
 
     @Autowired
@@ -29,38 +25,48 @@ public class BoardDAO extends JdbcDaoSupport {
         super.setDataSource(dataSource);
     }
 
-    // 글 등록
     @Transactional
     public void insertBoard(BoardVO vo) {
-        System.out.println("====> JdbcTemplate으로 insertBoard() 기능 처리 <====");
         getJdbcTemplate().update(BOARD_INSERT, vo.getTitle(), vo.getWriter(), vo.getContent());
     }
 
-    // 글 수정
     public void updateBoard(BoardVO vo) {
-        System.out.println("====> JdbcTemplate으로 updateBoard() 기능 처리 <====");
         getJdbcTemplate().update(BOARD_UPDATE, vo.getTitle(), vo.getContent(), vo.getSeq());
     }
 
-    // 글 삭제
     public void deleteBoard(BoardVO vo) {
-        System.out.println("====> JdbcTemplate으로 deleteBoard() 기능 처리 <====");
         getJdbcTemplate().update(BOARD_DELETE, vo.getSeq());
     }
 
-    // 글 상세 조회
     public BoardVO getBoard(BoardVO vo) {
-        System.out.println("====> JdbcTemplate으로 getBoard() 기능 처리 <====");
-        return getJdbcTemplate().queryForObject(BOARD_GET, new Object[] { vo.getSeq() }, new BoardRowMapper());
+        return getJdbcTemplate().queryForObject(BOARD_GET, new Object[]{vo.getSeq()}, new BoardRowMapper());
     }
 
-    // 글 목록 조회
     public List<BoardVO> getBoardList(BoardVO vo) {
-        System.out.println("====> JdbcTemplate으로 getBoardList() 기능 처리 <====");
         return getJdbcTemplate().query(BOARD_LIST, new BoardRowMapper());
     }
 
-    // 내부 RowMapper 클래스 정의
+    // 전체 검색
+    public List<BoardVO> searchBoard(String keyword) {
+        String sql = "SELECT * FROM board WHERE title LIKE ? OR content LIKE ? ORDER BY seq DESC";
+        String searchKeyword = "%" + keyword + "%";
+        return getJdbcTemplate().query(sql, new Object[]{searchKeyword, searchKeyword}, new BoardRowMapper());
+    }
+
+    // 제목 검색
+    public List<BoardVO> searchBoardByTitle(String keyword) {
+        String sql = "SELECT * FROM board WHERE title LIKE ? ORDER BY seq DESC";
+        String searchKeyword = "%" + keyword + "%";
+        return getJdbcTemplate().query(sql, new Object[]{searchKeyword}, new BoardRowMapper());
+    }
+
+    // 내용 검색
+    public List<BoardVO> searchBoardByContent(String keyword) {
+        String sql = "SELECT * FROM board WHERE content LIKE ? ORDER BY seq DESC";
+        String searchKeyword = "%" + keyword + "%";
+        return getJdbcTemplate().query(sql, new Object[]{searchKeyword}, new BoardRowMapper());
+    }
+
     private static class BoardRowMapper implements RowMapper<BoardVO> {
         @Override
         public BoardVO mapRow(ResultSet rs, int rowNum) throws SQLException {

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>새글 등록</title>
+    <title th:text="#{board.insert.title}">글 등록</title>
     <style>
         table { border-collapse: collapse; }
         td { padding: 5px; border: 1px solid #000; }
@@ -13,40 +13,46 @@
 <body>
 <center>
 
-    <h1>글 등록</h1>
-    <a th:href="@{/logout}">Log-out</a>
+    <h1 th:text="#{board.insert.title}">글 등록</h1>
+    <a th:href="@{/logout}" th:text="#{board.logout}">Log-out</a>
     <hr>
 
-    <form th:action="@{/insertBoard}" method="post">
+    <form th:action="@{/insertBoard}" method="post" enctype="multipart/form-data">
         <table>
             <tr>
-                <td class="bg-orange">제목</td>
+                <td class="bg-orange" th:text="#{board.title}">제목</td>
                 <td align="left">
                     <input type="text" name="title"/>
                 </td>
             </tr>
             <tr>
-                <td class="bg-orange">작성자</td>
+                <td class="bg-orange" th:text="#{board.writer}">작성자</td>
                 <td align="left">
                     <input type="text" name="writer" size="10"/>
                 </td>
             </tr>
             <tr>
-                <td class="bg-orange">내용</td>
+                <td class="bg-orange" th:text="#{board.content}">내용</td>
                 <td align="left">
                     <textarea name="content" rows="10" cols="40"></textarea>
                 </td>
             </tr>
             <tr>
+                <td class="bg-orange" th:text="#{board.file}">첨부파일</td>
+                <td align="left">
+                    <input type="file" name="file"/>
+                </td>
+            </tr>
+            <tr>
                 <td colspan="2" align="center">
-                    <input type="submit" value="새글 등록"/>
+                    <input type="submit" th:value="#{board.insert.title}"/>
                 </td>
             </tr>
         </table>
     </form>
 
     <hr>
-    <a th:href="@{/getBoardList}">목록 가기</a>
+    <a th:href="@{/getBoardList}" th:text="#{board.list.title}">목록 가기</a>
 
 </center>
 </body>

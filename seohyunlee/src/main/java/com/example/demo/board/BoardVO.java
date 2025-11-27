@@ -7,59 +7,25 @@ public class BoardVO {
     private String content;
     private String regDate;
     private int cnt;
+    private String fileName;
+    private String originalFileName;
 
-    public int getSeq() {
-        return seq;
-    }
+    public BoardVO() {}
 
-    public void setSeq(int seq) {
-        this.seq = seq;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getWriter() {
-        return writer;
-    }
-
-    public void setWriter(String writer) {
-        this.writer = writer;
-    }
-
-    public String getRegDate() {
-        return regDate;
-    }
-
-    public void setRegDate(String regDate) {
-        this.regDate = regDate;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public int getCnt() {
-        return cnt;
-    }
-
-    public void setCnt(int cnt) {
-        this.cnt = cnt;
-    }
-
-    @Override
-    public String toString(){
-        return "BoardVO [seq=" + seq + ", title="
-                + title + ", writer=" + writer + ", content=" +
-                content + ", regDate=" + regDate + ", cnt=" + cnt + "]";
-    }
+    public int getSeq() { return seq; }
+    public void setSeq(int seq) { this.seq = seq; }
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
+    public String getWriter() { return writer; }
+    public void setWriter(String writer) { this.writer = writer; }
+    public String getContent() { return content; }
+    public void setContent(String content) { this.content = content; }
+    public String getRegDate() { return regDate; }
+    public void setRegDate(String regDate) { this.regDate = regDate; }
+    public int getCnt() { return cnt; }
+    public void setCnt(int cnt) { this.cnt = cnt; }
+    public String getFileName() { return fileName; }
+    public void setFileName(String fileName) { this.fileName = fileName; }
+    public String getOriginalFileName() { return originalFileName; }
+    public void setOriginalFileName(String originalFileName) { this.originalFileName = originalFileName; }
 }
