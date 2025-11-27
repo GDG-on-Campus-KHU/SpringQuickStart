@@ -1,49 +1,53 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-    <title>ªı±€µÓ∑œ</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" pageEncoding="UTF-8">
+    <title>ÏÉàÍ∏ÄÎì±Î°ù</title>
 </head>
 <body>
 <center>
-    <h1>±€ µÓ∑œ</h1>
+    <h1>Í∏Ä Îì±Î°ù</h1>
     <a href="logout_proc.jsp">Log-out</a>
     <hr>
 
-    <!-- ±€ µÓ∑œ ∆˚ Ω√¿€ -->
-    <form action="insertBoard.do" method="post">
+    <!-- Í∏Ä Îì±Î°ù Ìèº ÏãúÏûë -->
+    <form action="insertBoard.do" method="post" enctype="multipart/form-data">
         <table border="1" cellpadding="0" cellspacing="0">
             <tr>
-                <td bgcolor="orange" width="70">¡¶∏Ò</td>
+                <td bgcolor="orange" width="70">Ï†úÎ™©</td>
                 <td align="left">
                     <input type="text" name="title">
                 </td>
             </tr>
             <tr>
-                <td bgcolor="orange">¿€º∫¿⁄</td>
+                <td bgcolor="orange">ÏûëÏÑ±Ïûê</td>
                 <td align="left">
                     <input type="text" name="writer" size="10">
                 </td>
             </tr>
             <tr>
-                <td bgcolor="orange">≥ªøÎ</td>
+                <td bgcolor="orange">ÎÇ¥Ïö©</td>
                 <td align="left">
                     <textarea name="content" cols="40" rows="10"></textarea>
                 </td>
             </tr>
             <tr>
+                <td bgcolor="orange" width="70">ÏóÖÎ°úÎìú</td><td align="left">
+                <input type="file" name="uploadFile"/></td>
+            </tr>
+            <tr>
                 <td colspan="2" align="center">
-                    <input type="submit" value="ªı±€ µÓ∑œ">
+                    <input type="submit" value="ÏÉàÍ∏Ä Îì±Î°ù">
                 </td>
             </tr>
         </table>
     </form>
     <hr>
 
-    <a href="getBoardList.jsp">±€ ∏Ò∑œ ∞°±‚</a>
+    <a href="getBoardList.jsp">Í∏Ä Î™©Î°ù Í∞ÄÍ∏∞</a>
 </center>
 </body>
 </html>

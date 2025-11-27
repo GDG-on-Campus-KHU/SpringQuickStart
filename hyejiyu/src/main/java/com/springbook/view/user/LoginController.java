@@ -1,12 +1,9 @@
 package com.springbook.view.user;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import com.springbook.biz.user.UserVO;
 import com.springbook.biz.user.impl.UserDAO;
@@ -14,35 +11,26 @@ import com.springbook.biz.user.impl.UserDAO;
 @Controller
 public class LoginController {
     @GetMapping("/login.do")
-    public String handleGetRequest() {
-        System.out.println("로그인 폼 화면 이동");
-        return "login";
+    public String loginView(UserVO vo) {
+        System.out.println("로그인 화면으로 이동");
+        vo.setId("test");
+        vo.setPassword("test123");
+        return "login.jsp";
     }
 
     @PostMapping("/login.do")
-    public ModelAndView handlePostRequest(HttpServletRequest request,
-                                          HttpServletResponse response) {
-        System.out.println("로그인 처리");
+    public String login(UserVO vo, UserDAO userDAO, HttpSession session) {
+        if (vo.getId() == null || vo.getId().equals("")) {
+            throw new IllegalArgumentException("아이디는 반드시 입력해야 합니다.");
+        }
 
-        // 1. 사용자 입력 정보 추출
-        String id = request.getParameter("id");
-        String password = request.getParameter("password");
-
-        // 2. DB 연동 처리
-        UserVO vo = new UserVO();
-        vo.setId(id);
-        vo.setPassword(password);
-
-        UserDAO userDAO = new UserDAO();
         UserVO user = userDAO.getUser(vo);
 
-        // 3. 화면 네비게이션
-        ModelAndView mav = new ModelAndView();
         if (user != null) {
-            mav.setViewName("redirect:getBoardList.do");
+            session.setAttribute("userName", user.getName());
+            return "getBoardList.do";
         } else {
-            mav.setViewName("redirect:login.do");
+            return "login.jsp";
         }
-        return mav;
     }
 }
