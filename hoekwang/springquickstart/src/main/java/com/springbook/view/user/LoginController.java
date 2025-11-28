@@ -1,39 +1,35 @@
 package com.springbook.view.user;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.Controller;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.springbook.biz.user.UserVO;
 import com.springbook.biz.user.impl.UserDAO;
 
-public class LoginController implements Controller {
-    @Override
-    public ModelAndView handleRequest(HttpServletRequest request,
-                                      HttpServletResponse response) {
-        System.out.println("로그인 처리");
+@Controller
+public class LoginController {
 
-        // 1. 사용자 입력 정보 추출
-        String id = request.getParameter("id");
-        String password = request.getParameter("password");
+    @RequestMapping(value = "/login.do", method =  RequestMethod.GET)
+    public String loginView(UserVO vo) {
+        System.out.println("로그인 화면으로 이동");
+        vo.setId("test");
+        vo.setPassword("test123");
+        return "login.jsp";
+    }
 
-        // 2. DB 연동 처리
-        UserVO vo = new UserVO();
-        vo.setId(id);
-        vo.setPassword(password);
-
-        UserDAO userDAO = new UserDAO();
-        UserVO user = userDAO.getUser(vo);
-
-        // 3. 화면 네비케이션
-        ModelAndView mav = new ModelAndView();
-        if(user != null) {
-            mav.setViewName("redirect:getBoardList.do");
-        } else {
-            mav.setViewName("redirect:login.jsp");
+    @RequestMapping(value="/login.do", method=RequestMethod.POST)
+    public String login(UserVO vo, UserDAO userDAO, HttpSession session) {
+        if(vo.getId() == null || vo.getId().equals("")) {
+            throw new IllegalArgumentException("아이디는 반드시 입력해야 합니다.");
         }
-        return mav;
+        UserVO user = userDAO.getUser(vo);
+        if (user != null) {
+            session.setAttribute("userName", user.getName());
+            return "getBoardList.do";
+        }
+        else return "login.jsp";
     }
 }

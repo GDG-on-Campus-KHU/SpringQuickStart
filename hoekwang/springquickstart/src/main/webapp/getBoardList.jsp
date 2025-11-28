@@ -3,6 +3,7 @@
 <%@ page import="com.springbook.biz.board.BoardVO"%>
 <%@ page contentType="text/html; charset=EUC-KR"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
 <%
     List<BoardVO> boardList = (List) session.getAttribute("boardList");
@@ -18,21 +19,23 @@
 </head>
 <body>
 <center>
-    <h1>글 목록</h1>
-    <h3>테스트님 환영합니다...<a href="logout.do">Log-out</a></h3>
+    <h1><spring:message code="message.board.list.mainTitle"/> </h1>
+    <h3>${userName }<spring:message code="message.board.list.welcomeMsg"/>...
+        <a href="logout.do">Log-out</a></h3>
     <hr>
 
     <!-- 검색 시작 -->
-    <form action="getBoardList.jsp" method="post">
+    <form action="getBoardList.do" method="post">
         <table border="1" cellpadding="0" cellspacing="0" width="700">
             <tr>
                 <td align="right">
                     <select name="searchCondition">
-                        <option value="TITLE">제목</option>
-                        <option value="CONTENT">내용</option>
+                        <c:forEach items="${conditionMap}" var="option">
+                            <option value="${option.value}">${option.key}</option>
+                        </c:forEach>
                     </select>
                     <input name="searchKeyword" type="text" />
-                    <input type="submit" value="검색" />
+                    <input type="submit" value="<spring:message code="message.board.list.search.condition.btn"/>" />
                 </td>
             </tr>
         </table>
@@ -42,11 +45,11 @@
     <!-- 게시글 목록 테이블 시작 -->
     <table border="1" cellpadding="0" cellspacing="0" width="700">
         <tr>
-            <th bgcolor="orange" width="100">번호</th>
-            <th bgcolor="orange" width="200">제목</th>
-            <th bgcolor="orange" width="150">작성자</th>
-            <th bgcolor="orange" width="150">등록일</th>
-            <th bgcolor="orange" width="100">조회수</th>
+            <th bgcolor="orange" width="100"><spring:message code="message.board.list.table.head.seq"/></th>
+            <th bgcolor="orange" width="200"><spring:message code="message.board.list.table.head.title"/></th>
+            <th bgcolor="orange" width="150"><spring:message code="message.board.list.table.head.writer"/></th>
+            <th bgcolor="orange" width="150"><spring:message code="message.board.list.table.head.regDate"/></th>
+            <th bgcolor="orange" width="100"><spring:message code="message.board.list.table.head.cnt"/></th>
         </tr>
 
         <c:forEach items="${boardList}" var="board">
@@ -61,7 +64,7 @@
 
     </table>
     <br>
-    <a href="insertBoard.do">새글 등록</a>
+    <a href="insertBoard.do"><spring:message code="message.board.list.link.insertBoard"/></a>
 </center>
 </body>
 </html>
