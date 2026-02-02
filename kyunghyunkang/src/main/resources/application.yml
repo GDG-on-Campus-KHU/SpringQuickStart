@@ -12,6 +12,16 @@ spring:
       hibernate:
         format_sql: true
 
+  mvc:
+    view:
+      prefix: /WEB-INF/board/
+      suffix: .jsp
+
+server:
+  servlet:
+    encoding:
+      charset: EUC-KR
+
 logging:
   level:
     org.hibernate.SQL: debug
